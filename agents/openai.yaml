@@ -1,0 +1,4 @@
+interface:
+  display_name: "PPT Narration Video Xunfei"
+  short_description: "Turn decks into narrated Xunfei videos"
+  default_prompt: "Use $ppt-narration-video-xunfei to turn this PDF or PPTX into a narrated Chinese presentation video."
