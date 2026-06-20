@@ -1,29 +1,36 @@
 # ppt-narration-video-xunfei
 
-Codex skill for turning a PDF or PPTX presentation into a narrated Chinese video with Xunfei TTS voiceover, subtitles, timeline metadata, and MP4 exports.
+<p>
+  <a href="./README.md">中文</a>
+  |
+  <a href="./README.en.md">English</a>
+</p>
 
-## What It Does
+基于讯飞语音合成的 Codex Skill：把 PDF 或 PPTX 演示文稿生成带中文配音、字幕、时间轴和 MP4 成品的讲解视频。
 
-This skill handles the full presentation-to-video workflow:
+## 功能
 
-1. Read a PDF or PPTX deck.
-2. Render each slide/page to a 1920x1080 image.
-3. Use a confirmed per-page narration script.
-4. Generate one Xunfei TTS audio file per page.
-5. Create SRT subtitles and a timeline JSON.
-6. Export two videos:
-   - MP4 without subtitle track
-   - MP4 with soft subtitle track
-7. Verify the final video stream, audio stream, subtitle stream, and duration.
+这套 Skill 覆盖完整的“演示文稿转讲解视频”流程：
 
-If no narration script is provided, Codex should first generate a per-page script draft from the slide content and ask the user to confirm or revise it before calling TTS.
+1. 读取 PDF 或 PPTX。
+2. 将每一页渲染为 1920x1080 图片。
+3. 使用已经确认的逐页讲稿。
+4. 调用讯飞 TTS，为每一页生成独立音频。
+5. 生成 SRT 字幕和时间轴 JSON。
+6. 导出两个视频：
+   - 无字幕轨 MP4
+   - 带软字幕轨 MP4
+7. 校验最终视频的视频流、音频流、字幕流和总时长。
 
-## Skill Structure
+如果用户没有提供讲稿，Codex 应先根据页面内容生成逐页讲稿草稿，并让用户确认或修改；确认后再调用 TTS。
+
+## 目录结构
 
 ```text
 ppt-narration-video-xunfei/
 ├── SKILL.md
 ├── README.md
+├── README.en.md
 ├── agents/
 │   └── openai.yaml
 ├── references/
@@ -33,38 +40,38 @@ ppt-narration-video-xunfei/
     └── make_video.py
 ```
 
-## Install
+## 安装
 
-Copy this folder into your Codex skills directory:
+复制本目录到 Codex skills 目录：
 
 ```bash
 mkdir -p ~/.codex/skills
 cp -R ppt-narration-video-xunfei ~/.codex/skills/
 ```
 
-Then start a new Codex session or reload skills if your Codex surface supports it.
+然后开启新的 Codex 会话，或在支持重载的 Codex 界面中重新加载 Skills。
 
-## Requirements
+## 环境要求
 
-Use the `fjm` conda environment by default unless another Python environment is explicitly requested.
+默认使用 `fjm` conda 环境，除非用户明确指定其他 Python 环境。
 
-Required Python packages:
+需要的 Python 包：
 
 ```bash
 pip install pymupdf pillow websocket-client imageio-ffmpeg
 ```
 
-For PPTX input, install LibreOffice so the script can convert PPTX to PDF:
+如果输入是 PPTX，需要安装 LibreOffice，用于把 PPTX 转成 PDF：
 
 ```bash
 brew install --cask libreoffice
 ```
 
-PDF input does not require LibreOffice.
+PDF 输入不需要 LibreOffice。
 
-## Configure Xunfei API
+## 配置讯飞 API
 
-Save credentials locally with:
+用下面命令把讯飞凭证保存到本机私有配置文件：
 
 ```bash
 python scripts/setup_secret.py \
@@ -74,19 +81,19 @@ python scripts/setup_secret.py \
   --voice "x4_lingfeizhe_zl"
 ```
 
-The script writes:
+脚本会写入：
 
 ```text
 ~/.codex/secrets/ppt-narration-video-xunfei.json
 ```
 
-File permission is set to `0600`.
+文件权限会设置为 `0600`。
 
-Do not commit this secret file. Do not place API keys in project folders, outputs, subtitles, timelines, or README files.
+不要提交这个密钥文件。不要把 API Key 写进项目目录、输出目录、字幕、时间轴或 README。
 
-## Script Format
+## 讲稿格式
 
-Use one section per page:
+每页一个小节：
 
 ```markdown
 ## 第1页：封面
@@ -98,11 +105,11 @@ Use one section per page:
 本次汇报分为前期分析、目标定位、方案设计和专项设计四个部分。
 ```
 
-The script page count must match the slide/page count.
+讲稿页数必须和演示文稿页数一致。
 
-## Generate Video
+## 生成视频
 
-PDF example:
+PDF 示例：
 
 ```bash
 python scripts/make_video.py \
@@ -112,7 +119,7 @@ python scripts/make_video.py \
   --voice x4_lingfeizhe_zl
 ```
 
-PPTX example:
+PPTX 示例：
 
 ```bash
 python scripts/make_video.py \
@@ -122,7 +129,7 @@ python scripts/make_video.py \
   --voice x4_lingfeizhe_zl
 ```
 
-Optional controls:
+可选参数：
 
 ```bash
 --speed 50
@@ -132,9 +139,9 @@ Optional controls:
 --work-dir /path/to/work
 ```
 
-## Outputs
+## 输出文件
 
-The script creates:
+脚本会生成：
 
 ```text
 {prefix}.mp4
@@ -145,15 +152,15 @@ The script creates:
 {prefix}_verify.txt
 ```
 
-## Security Notes
+## 安全说明
 
-- Store Xunfei credentials only in `~/.codex/secrets/ppt-narration-video-xunfei.json`.
-- Keep secret file permission at `0600`.
-- If credentials were pasted into chat or exposed in screenshots, rotate them after use.
-- The skill scripts do not print API secrets.
+- 讯飞凭证只保存到 `~/.codex/secrets/ppt-narration-video-xunfei.json`。
+- 密钥文件权限保持 `0600`。
+- 如果凭证被粘贴到聊天里，或出现在截图里，用完后应重置密钥。
+- Skill 脚本不会打印 API Secret。
 
-## Typical Codex Prompt
+## 典型 Codex 提示词
 
 ```text
-Use $ppt-narration-video-xunfei to turn this PDF into a narrated presentation video. If no script is provided, draft the per-page narration first and ask me to confirm before generating TTS.
+使用 $ppt-narration-video-xunfei 把这个 PDF 做成中文讲解视频。如果没有讲稿，先根据每页内容生成逐页讲稿，并让我确认后再生成配音。
 ```
