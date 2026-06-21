@@ -91,6 +91,49 @@ File permission is set to `0600`.
 
 Do not commit this secret file. Do not place API keys in project folders, outputs, subtitles, timelines, or README files.
 
+## Configure Voice
+
+The Xunfei voice parameter is called `vcn` or `voice_name`. The skill's `--voice` option is exactly this value.
+
+How to find the voice parameter in the Xunfei console:
+
+1. Open the Xunfei Open Platform console.
+2. Enter your application.
+3. Select `语音合成`.
+4. Open `在线语音合成`.
+5. In `发音人授权管理`, choose `基础发音人` or `特色发音人`.
+6. Find the voice you want to use.
+7. Expand the voice row and copy `参数（vcn/voice_name）`.
+
+Examples:
+
+```text
+Lingfeizhe: x4_lingfeizhe_zl
+Lingbosong: x4_lingbosong
+```
+
+Save it as the default voice:
+
+```bash
+python scripts/setup_secret.py \
+  --appid "YOUR_APPID" \
+  --apikey "YOUR_APIKEY" \
+  --apisecret "YOUR_APISECRET" \
+  --voice "x4_lingfeizhe_zl"
+```
+
+Or override it for one video run:
+
+```bash
+python scripts/make_video.py \
+  --input /path/to/deck.pdf \
+  --script /path/to/script.md \
+  --output-dir /path/to/outputs \
+  --voice x4_lingfeizhe_zl
+```
+
+The voice must be marked as `已开通` in the console. If it is not enabled, API authentication may succeed but synthesis will fail.
+
 ## Script Format
 
 Use one section per page:

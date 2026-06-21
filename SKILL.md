@@ -20,6 +20,7 @@ Use this skill to create a complete narrated video from a PDF/PPTX deck.
 3. Check Xunfei credentials.
    - Preferred secret file: `~/.codex/secrets/ppt-narration-video-xunfei.json`
    - If missing, ask the user for `appid`, `apikey`, `apisecret`, and default `voice`.
+   - If the user does not know the voice value, guide them to Xunfei console > app > 语音合成 > 在线语音合成 > 发音人授权管理, then copy `参数（vcn/voice_name）`.
    - Save secrets only with `scripts/setup_secret.py`; never write credentials into project files, outputs, logs, subtitles, timelines, or final replies.
 4. Check runtime.
    - Use the `fjm` conda Python when no Python is specified.
@@ -61,6 +62,23 @@ The file is saved to:
 The script sets file permission to `0600`.
 
 If the user pasted credentials or sent a screenshot containing credentials, remind them to rotate keys after the task.
+
+## Voice Guidance
+
+The Xunfei voice parameter is `vcn` or `voice_name`. The script option `--voice` must use that exact value.
+
+When users need help choosing or configuring a voice, instruct them:
+
+1. Open Xunfei Open Platform console.
+2. Enter the target app.
+3. Go to `语音合成`.
+4. Open `在线语音合成`.
+5. Find `发音人授权管理`.
+6. Choose `基础发音人` or `特色发音人`.
+7. Expand the chosen voice row.
+8. Copy `参数（vcn/voice_name）`, such as `x4_lingfeizhe_zl`.
+
+Only use voices whose status is `已开通`.
 
 ## Main Command
 

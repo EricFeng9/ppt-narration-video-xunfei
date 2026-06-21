@@ -91,6 +91,49 @@ python scripts/setup_secret.py \
 
 不要提交这个密钥文件。不要把 API Key 写进项目目录、输出目录、字幕、时间轴或 README。
 
+## 配置发音人
+
+讯飞接口里的发音人参数叫 `vcn` 或 `voice_name`。本 Skill 的 `--voice` 参数就是这个值。
+
+在讯飞控制台查找发音人参数：
+
+1. 打开讯飞开放平台控制台。
+2. 进入你的应用。
+3. 选择 `语音合成`。
+4. 打开 `在线语音合成`。
+5. 在 `发音人授权管理` 中选择 `基础发音人` 或 `特色发音人`。
+6. 找到你要使用的发音人。
+7. 展开该发音人，复制 `参数（vcn/voice_name）`。
+
+示例：
+
+```text
+聆飞哲：x4_lingfeizhe_zl
+聆伯松：x4_lingbosong
+```
+
+把它保存为默认发音人：
+
+```bash
+python scripts/setup_secret.py \
+  --appid "YOUR_APPID" \
+  --apikey "YOUR_APIKEY" \
+  --apisecret "YOUR_APISECRET" \
+  --voice "x4_lingfeizhe_zl"
+```
+
+或在生成视频时临时指定：
+
+```bash
+python scripts/make_video.py \
+  --input /path/to/deck.pdf \
+  --script /path/to/script.md \
+  --output-dir /path/to/outputs \
+  --voice x4_lingfeizhe_zl
+```
+
+注意：发音人必须已经在控制台显示为 `已开通`。如果没有开通，API 会鉴权成功但合成失败。
+
 ## 讲稿格式
 
 每页一个小节：

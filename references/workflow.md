@@ -18,6 +18,16 @@ Use this shape:
 
 The Xunfei WebAPI voice parameter is `vcn`.
 
+To guide a user:
+
+1. Open Xunfei Open Platform console.
+2. Enter the app.
+3. Open `语音合成` > `在线语音合成`.
+4. Locate `发音人授权管理`.
+5. Select `基础发音人` or `特色发音人`.
+6. Expand a voice row and copy `参数（vcn/voice_name）`.
+7. Confirm status is `已开通`.
+
 Examples:
 
 - `x4_lingfeizhe_zl`
